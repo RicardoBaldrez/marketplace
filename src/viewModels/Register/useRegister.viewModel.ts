@@ -4,8 +4,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "./register.schema";
 import { RegisterSchemaData } from "./register.schema";
 import { useRegisterMutation } from "../../shared/queries/auth/use-register.mutation";
+import { useUserStore } from "../../shared/store/user-store";
 
 export const useRegisterViewModel = () => {
+const { setSession } = useUserStore();
+  
   const userRegisterMutation = useRegisterMutation();
 
   const { control, handleSubmit, formState: { errors } } = useForm<RegisterSchemaData>({
@@ -21,7 +24,13 @@ export const useRegisterViewModel = () => {
 
   const onSubmit = handleSubmit(async (userData) => {
     const { confirmPassword, ...registerData } = userData;
-    await userRegisterMutation.mutateAsync(registerData);
+    const mutationReponse = await userRegisterMutation.mutateAsync(registerData);
+
+    setSession({
+      user: mutationReponse.user,
+      token: mutationReponse.token,
+      refreshToken: mutationReponse.refreshToken,
+    })
   });
 
   return {
