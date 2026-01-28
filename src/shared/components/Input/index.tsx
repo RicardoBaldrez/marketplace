@@ -11,12 +11,15 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { inputVariants, InputVariants } from './input.variants';
 
+import { useInputViewModel } from './useInputViewModel';
+
 interface InputProps extends TextInputProps, InputVariants {
   label?: string;
   leftIcon?: keyof typeof Ionicons.glyphMap;
   rightIcon?: keyof typeof Ionicons.glyphMap;
   containerClassName?: string;
   mask?: (value: string) => void | string;
+  error?: string;
 }
 
 export const Input: FC<InputProps> = ({
@@ -24,9 +27,30 @@ export const Input: FC<InputProps> = ({
   leftIcon,
   rightIcon,
   className,
+  value,
+  isError,
+  secureTextEntry = false,
+  onFocus,
+  onBlur,
+  onChangeText,
+  mask,
+  error,
+  isDisabled,
   containerClassName,
   ...textInputProps
 }) => {
+  const { getIconColor, handleShowPasswordToggle, handleWrapperFocus, handleFocus, handleBlur, showPassword } = useInputViewModel({
+    mask,
+    value,
+    secureTextEntry,
+    isDisabled,
+    error,
+    isError: !!error,
+    onBlur,
+    onFocus,
+    onChangeText,
+  });
+  
   const styles = inputVariants();
 
   return (
