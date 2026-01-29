@@ -37,9 +37,19 @@ export const Input: FC<InputProps> = ({
   error,
   isDisabled,
   containerClassName,
+
   ...textInputProps
 }) => {
-  const { getIconColor, handleShowPasswordToggle, handleWrapperFocus, handleFocus, handleBlur, showPassword } = useInputViewModel({
+  const {
+    getIconColor,
+    handleShowPasswordToggle,
+    handleWrapperFocus,
+    handleFocus,
+    handleBlur,
+    handleChangeText,
+    showPassword,
+    isFocused,
+  } = useInputViewModel({
     mask,
     value,
     secureTextEntry,
@@ -50,17 +60,21 @@ export const Input: FC<InputProps> = ({
     onFocus,
     onChangeText,
   });
-  
-  const styles = inputVariants();
+
+  const styles = inputVariants({
+    isFocused
+  });
 
   return (
     <View className={styles.container({ className: containerClassName })}>
-      <Text className={styles.label()}>Label</Text>
+      <Text className={styles.label()}>{label}</Text>
       <Pressable className={styles.wrapper()}>
-        <Ionicons size={22} name="person" />
+        <Ionicons className="mr-3 text-gray-200" size={22} name="person" />
         <TextInput
-          className={styles.input({ className: className })}
           {...textInputProps}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          className={styles.input({ className: className })}
         />
         <TouchableOpacity>
           <Ionicons size={22} name="eye-off-outline" />

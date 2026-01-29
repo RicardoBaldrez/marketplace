@@ -7,7 +7,8 @@ import { Input } from "../../shared/components/Input";
 export const RegisterView: FC<ReturnType<typeof useRegisterViewModel>> = ({ onSubmit }) => {
   return (
     <View className="flex-1 justify-center">
-      <Input />
+      <Input label="E-mail" />
+      <Input label="Senha" />
       <TouchableOpacity onPress={onSubmit}>
         <Text>Registrar</Text>
       </TouchableOpacity>
