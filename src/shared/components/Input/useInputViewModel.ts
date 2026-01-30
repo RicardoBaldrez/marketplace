@@ -13,6 +13,7 @@ interface IInputViewModel {
   mask?: (text: string) => string | void;
   onChangeText?: (text: string) => string | void;
   value?: string;
+  showPassword?: boolean;
 }
 
 export const useInputViewModel = ({
@@ -26,7 +27,7 @@ export const useInputViewModel = ({
   onChangeText,
   value,
 }: IInputViewModel) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(secureTextEntry);
   const [isFocused, setIsFocused] = useState(false);
 
   const inputRef = useRef<TextInput>(null);

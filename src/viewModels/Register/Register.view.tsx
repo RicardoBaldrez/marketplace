@@ -18,7 +18,7 @@ export const RegisterView: FC<ReturnType<typeof useRegisterViewModel>> = ({
         leftIcon="mail-outline"
         error="E-mail inválido"
       />
-      <Input label="Senha" leftIcon="lock-closed-outline" />
+      <Input label="Senha" leftIcon="lock-closed-outline" secureTextEntry />
       <TouchableOpacity onPress={onSubmit}>
         <Text>Registrar</Text>
       </TouchableOpacity>
