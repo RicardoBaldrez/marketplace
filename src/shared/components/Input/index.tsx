@@ -62,18 +62,27 @@ export const Input: FC<InputProps> = ({
   });
 
   const styles = inputVariants({
-    isFocused
+    isFocused,
   });
 
   return (
     <View className={styles.container({ className: containerClassName })}>
       <Text className={styles.label()}>{label}</Text>
       <Pressable className={styles.wrapper()}>
-        <Ionicons className="mr-3 text-gray-200" size={22} name="person" />
+        {leftIcon && (
+          <Ionicons
+            color={getIconColor()}
+            className="mr-3 text-gray-200"
+            size={22}
+            name={leftIcon}
+          />
+        )}
         <TextInput
-          {...textInputProps}
+          value={value}
           onBlur={handleBlur}
           onFocus={handleFocus}
+          onChangeText={handleChangeText}
+          {...textInputProps}
           className={styles.input({ className: className })}
         />
         <TouchableOpacity>
